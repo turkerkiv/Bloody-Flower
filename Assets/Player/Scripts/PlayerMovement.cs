@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _sideMovementSpeed = 5f;
 
     [SerializeField] float _mouseSensivity = 60f;
+    [SerializeField] float _maxHorizontalLookAngle = 65f;
+    [SerializeField] float _maxVerticalLookAngle = 65f;
 
     Camera _mainCamera;
     Rigidbody _rb;
@@ -19,6 +21,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -40,16 +47,17 @@ public class PlayerMovement : MonoBehaviour
         float yValue = yAxis * _mouseSensivity * Time.deltaTime;
 
         _xRotationInput += xValue;
-        _yRotationInput += yValue;
+        _xRotationInput = Mathf.Clamp(_xRotationInput, -_maxHorizontalLookAngle, _maxHorizontalLookAngle); //to dont let player to rotate wrongly
 
-        _mainCamera.transform.rotation = Quaternion.Euler(-_yRotationInput, _xRotationInput, 0);
+        _yRotationInput += yValue;
+        _yRotationInput = Mathf.Clamp(_yRotationInput, -_maxVerticalLookAngle, _maxVerticalLookAngle); //to dont let player to rotate wrongly
+
+        _mainCamera.transform.localRotation = Quaternion.Euler(-_yRotationInput, _xRotationInput, 0);
     }
 
     void Move()
     {
-        //needs some improvement on horizontal a,d movement
-
-        //getting input
+        //getting input //may need some improvement on horizontal a,d movement
         float forwardMovement = Input.GetAxis("Vertical");
         float horizontalMovement = Input.GetAxis("Horizontal");
 
@@ -59,12 +67,22 @@ public class PlayerMovement : MonoBehaviour
             CorrectBodyRotation();
         }
 
+        //for equalize value of rotationinput with localrotation after moving//may need some improvement. Sometimes it flips all the way
+        if (_mainCamera.transform.localRotation.y < 0)
+        {
+            _xRotationInput = _mainCamera.transform.localEulerAngles.y - 360;
+        }
+        else
+        {
+            _xRotationInput = _mainCamera.transform.localEulerAngles.y;
+        }
+
         //calculating velocities depending on camera's transform
         Vector3 zVelocity = forwardMovement * _forwardMovementSpeed * _mainCamera.transform.forward;
         Vector3 horizontalVelocity = horizontalMovement * _sideMovementSpeed * _mainCamera.transform.right;
 
         //to dont fly
-        Vector3 finalVelocity = new Vector3(zVelocity.x + horizontalVelocity.x, 0f, zVelocity.z + horizontalVelocity.z);
+        Vector3 finalVelocity = new Vector3(zVelocity.x + horizontalVelocity.x, _rb.velocity.y, zVelocity.z + horizontalVelocity.z);
 
         _rb.velocity = finalVelocity;
     }
