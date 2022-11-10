@@ -10,8 +10,24 @@ public class HumanPool : MonoBehaviour
     [SerializeField] int _killerHumanCount;
     [SerializeField] Vector3 _spawnArea;
 
+    List<HumanAI> _humans = new List<HumanAI>();
     List<HumanAI> _steadyHumans = new List<HumanAI>();
+
     public List<HumanAI> SteadyHumans { get { return _steadyHumans; } }
+    public static HumanPool Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -23,33 +39,50 @@ public class HumanPool : MonoBehaviour
 
     }
 
+    public void ChangeBodies(Player.GlassState state)
+    {
+        foreach (HumanAI human in _humans)
+        {
+            if (state == Player.GlassState.GlassOn)
+            {
+                human.ChangeBody(state);
+            }
+            else
+            {
+                human.ChangeBody(state);
+            }
+        }
+    }
+
     void PopulatePool()
     {
         for (int i = 0; i < _steadyHumanCount; i++)
         {
-            HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
-            instance.transform.SetParent(transform);
-            instance.HumanPool = this;
-            instance.Type = HumanType.Steady;
-            instance.GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
-
-            _steadyHumans.Add(instance);
+            InstantiateHuman(HumanType.Steady);
         }
 
         for (int i = 0; i < _killerHumanCount; i++)
         {
-            HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
-            instance.transform.SetParent(transform);
-            instance.HumanPool = this;
-            instance.Type = HumanType.Killer;
+            InstantiateHuman(HumanType.Killer);
         }
 
         for (int i = 0; i < _moverHumanCount; i++)
         {
-            HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
-            instance.transform.SetParent(transform);
-            instance.HumanPool = this;
-            instance.Type = HumanType.Mover;
+            InstantiateHuman(HumanType.Mover);
+        }
+    }
+
+    void InstantiateHuman(HumanType type)
+    {
+        HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
+        instance.transform.SetParent(transform);
+        instance.HumanPool = this;
+        instance.Type = type;
+        _humans.Add(instance);
+
+        if (type == HumanType.Steady)
+        {
+            _steadyHumans.Add(instance);
         }
     }
 

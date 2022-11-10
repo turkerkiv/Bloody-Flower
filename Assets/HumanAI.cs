@@ -5,15 +5,17 @@ using UnityEngine.AI;
 
 public class HumanAI : MonoBehaviour
 {
+    [SerializeField] GameObject _glassOnBody;
+    [SerializeField] GameObject _glassOffBody;
     [SerializeField][Range(0, 100)] int _actionPercent = 10;
-    public HumanPool HumanPool { get; set; }
 
     NavMeshAgent _navMeshAgent;
     HumanAI _targetHuman;
 
+    public HumanPool HumanPool { get; set; }
     public HumanPool.HumanType Type { get; set; }
 
-    bool _didAction;
+    bool _tookAction;
 
     private void Awake()
     {
@@ -41,9 +43,23 @@ public class HumanAI : MonoBehaviour
     {
     }
 
+    public void ChangeBody(Player.GlassState state)
+    {
+        if (state == Player.GlassState.GlassOn)
+        {
+            _glassOnBody.SetActive(true);
+            _glassOffBody.SetActive(false);
+        }
+        else
+        {
+            _glassOnBody.SetActive(false);
+            _glassOffBody.SetActive(true);
+        }
+    }
+
     void SelectRandomHuman()
     {
-        _didAction = false;
+        _tookAction = false;
 
         int randomIndex = Random.Range(0, HumanPool.SteadyHumans.Count);
 
@@ -60,10 +76,10 @@ public class HumanAI : MonoBehaviour
     void CheckForAction()
     {
         //if close enough
-        if (!_didAction && Vector3.Distance(transform.position, _targetHuman.transform.position) <= _navMeshAgent.stoppingDistance)
+        if (!_tookAction && Vector3.Distance(transform.position, _targetHuman.transform.position) <= _navMeshAgent.stoppingDistance)
         {
             //to make it once
-            _didAction = true;
+            _tookAction = true;
 
             //if it is killer, roll dice to kill or not 
             if (Type == HumanPool.HumanType.Killer && CanStartAction())
