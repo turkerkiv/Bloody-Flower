@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Awake()
     {
+        _crosshair.SetActive(false);
     }
 
     void Update()
@@ -37,14 +38,13 @@ public class PlayerAttack : MonoBehaviour
 
     void Fire()
     {
-        if (!_isAiming) { return; }
+        if (!_isAiming || !Input.GetMouseButtonDown(0) || !Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
+        
+        HumanAI human = hit.transform.GetComponentInParent<HumanAI>();
 
-        if (Input.GetMouseButtonDown(0))
+        if (human != null)
         {
-            if (Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit))
-            {
-                Debug.Log("We Hit2");
-            }
+            human.gameObject.SetActive(false);
         }
     }
 }

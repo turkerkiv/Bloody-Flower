@@ -16,10 +16,16 @@ public class HumanAI : MonoBehaviour
     public HumanPool.HumanType Type { get; set; }
 
     bool _tookAction;
+    bool _isDead;
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
+    private void OnEnable()
+    {
+        _isDead = false;
     }
 
     void Start()
@@ -32,6 +38,8 @@ public class HumanAI : MonoBehaviour
 
     private void Update()
     {
+        if (_isDead) { return; }
+
         if (Type != HumanPool.HumanType.Steady)
         {
             CheckForAction();
@@ -41,6 +49,7 @@ public class HumanAI : MonoBehaviour
 
     private void OnDisable()
     {
+        _isDead = true;
     }
 
     public void ChangeBody(Player.GlassState state)
@@ -70,6 +79,8 @@ public class HumanAI : MonoBehaviour
 
     void MoveToTarget()
     {
+        if (_isDead) { return; }
+        
         _navMeshAgent.SetDestination(_targetHuman.transform.position);
     }
 

@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _forwardMovementSpeed: 5
   _sideMovementSpeed: 5
-  _mouseSensivity: 65.76
+  _mouseSensivity: 100
   _maxHorizontalLookAngle: 65
   _maxVerticalLookAngle: 65
 --- !u!136 &1046714912078507063

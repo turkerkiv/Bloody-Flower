@@ -267,9 +267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _humanPrefab: {fileID: 7026979734880677131, guid: e08597c73bf78a946af4ae329096c8d4,
     type: 3}
-  _steadyHumanCount: 3
-  _moverHumanCount: 1
-  _killerHumanCount: 1
+  _steadyHumanCount: 15
+  _moverHumanCount: 5
+  _killerHumanCount: 5
   _spawnArea: {x: 28, y: 0, z: 28}
 --- !u!1 &310814931
 GameObject:
