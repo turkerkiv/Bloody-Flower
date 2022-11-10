@@ -53,6 +53,11 @@ public class HumanAI : MonoBehaviour
         GameManager.Instance.ModifyTrustRate(Type);
     }
 
+    public void SetGlassOffBody(GameObject body)
+    {
+        Instantiate(body, transform.position, Quaternion.identity, _glassOffBody.transform);
+    }
+
     public void ChangeBody(Player.GlassState state)
     {
         if (state == Player.GlassState.GlassOn)

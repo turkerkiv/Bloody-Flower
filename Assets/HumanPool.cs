@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HumanPool : MonoBehaviour
 {
+    [SerializeField] List<GameObject> _humanBodies;
     [SerializeField] HumanAI _humanPrefab;
     [SerializeField] int _steadyHumanCount;
     [SerializeField] int _moverHumanCount;
@@ -74,10 +75,12 @@ public class HumanPool : MonoBehaviour
 
     void InstantiateHuman(HumanType type)
     {
-        HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
-        instance.transform.SetParent(transform);
+        HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity, transform);
         instance.Type = type;
         _humans.Add(instance);
+
+        int randomIndex = Random.Range(0, _humanBodies.Count);
+        instance.SetGlassOffBody(_humanBodies[randomIndex]);
 
         if (type == HumanType.Steady)
         {
