@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] float _glassOnDuration = 5f;
+
     GlassState _glassState;
 
     void Start()
@@ -20,15 +22,30 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.F)) { return; }
 
+        CancelInvoke(nameof(WearGlass));
+
         if (_glassState == GlassState.GlassOn)
         {
-            _glassState = GlassState.GlassOff;
-            HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
+            TakeOffGlass();
+            Invoke(nameof(WearGlass), _glassOnDuration);
             return;
         }
 
+        WearGlass();
+        Debug.Log(Time.time);
+    }
+
+    void WearGlass()
+    {
         _glassState = GlassState.GlassOn;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
+    }
+
+    void TakeOffGlass()
+    {
+        _glassState = GlassState.GlassOff;
+        HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
+        Debug.Log(Time.time);
     }
 
     public enum GlassState
