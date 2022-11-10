@@ -12,7 +12,6 @@ public class HumanAI : MonoBehaviour
     NavMeshAgent _navMeshAgent;
     HumanAI _targetHuman;
 
-    public HumanPool HumanPool { get; set; }
     public HumanPool.HumanType Type { get; set; }
 
     bool _tookAction;
@@ -50,6 +49,8 @@ public class HumanAI : MonoBehaviour
     private void OnDisable()
     {
         _isDead = true;
+
+        GameManager.Instance.ModifyTrustRate(Type);
     }
 
     public void ChangeBody(Player.GlassState state)
@@ -70,9 +71,9 @@ public class HumanAI : MonoBehaviour
     {
         _tookAction = false;
 
-        int randomIndex = Random.Range(0, HumanPool.SteadyHumans.Count);
+        int randomIndex = Random.Range(0, HumanPool.Instance.SteadyHumans.Count);
 
-        _targetHuman = HumanPool.SteadyHumans[randomIndex];
+        _targetHuman = HumanPool.Instance.SteadyHumans[randomIndex];
 
         MoveToTarget();
     }
@@ -80,7 +81,7 @@ public class HumanAI : MonoBehaviour
     void MoveToTarget()
     {
         if (_isDead) { return; }
-        
+
         _navMeshAgent.SetDestination(_targetHuman.transform.position);
     }
 

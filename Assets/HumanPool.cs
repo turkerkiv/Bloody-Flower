@@ -76,7 +76,6 @@ public class HumanPool : MonoBehaviour
     {
         HumanAI instance = Instantiate(_humanPrefab, GetRandomPosition(), Quaternion.identity);
         instance.transform.SetParent(transform);
-        instance.HumanPool = this;
         instance.Type = type;
         _humans.Add(instance);
 
