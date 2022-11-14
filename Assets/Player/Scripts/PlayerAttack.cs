@@ -11,6 +11,8 @@ public class PlayerAttack : MonoBehaviour
 
     bool _isAiming;
 
+    public bool IsAiming { get { return _isAiming; } }
+
     void Awake()
     {
         _crosshair.SetActive(false);
