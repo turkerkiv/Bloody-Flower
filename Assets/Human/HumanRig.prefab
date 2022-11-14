@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 7026979734880677132}
   - component: {fileID: 7026979734880677131}
   - component: {fileID: 289955557919015484}
+  - component: {fileID: 6111083978007979819}
   m_Layer: 0
   m_Name: HumanRig
   m_TagString: Untagged
@@ -103,6 +104,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &6111083978007979819
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026979734880677133}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.453487, z: 1}
+  m_Center: {x: 0, y: 1.7675731, z: 0}
 --- !u!1 &7026979735745134874
 GameObject:
   m_ObjectHideFlags: 0

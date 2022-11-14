@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 1046714912078507064}
   - component: {fileID: 1046714912078507063}
   - component: {fileID: 1046714913306169505}
+  - component: {fileID: 1384389384510259816}
   m_Layer: 0
   m_Name: PlayerRig
   m_TagString: Untagged
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4893b2e2087248044884acf424523b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _glassOnDuration: 5
 --- !u!114 &1046714912078507064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,10 +304,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.17418861
+  m_Height: 1.781434
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.0060818195, y: 0.898335, z: -0.00016884506}
 --- !u!114 &1046714913306169505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +322,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crosshair: {fileID: 1383638646}
   _tipOfWeapon: {fileID: 1107341014}
+--- !u!95 &1384389384510259816
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046714912078507068}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 9fcad4906856cde45aab6e7edfad9854, type: 3}
+  m_Controller: {fileID: 9100000, guid: 46a640fd781ff3a48a1d2706b9e0b147, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1046714913076249944
 GameObject:
   m_ObjectHideFlags: 0
