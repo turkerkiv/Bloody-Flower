@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerAttack _playerAttack;
     Camera _mainCamera;
     Rigidbody _rb;
+    Animator _animator;
 
     float _xRotationInput;
     float _yRotationInput;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _playerAttack = GetComponent<PlayerAttack>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -70,6 +72,9 @@ public class PlayerMovement : MonoBehaviour
         //getting input //may need some improvement on horizontal a,d movement
         float forwardMovement = Input.GetAxis("Vertical");
         float horizontalMovement = Input.GetAxis("Horizontal");
+
+        bool isWalking = forwardMovement != 0 ? true : false;
+        _animator.SetBool("_isWalking", isWalking);
 
         //calculating velocities depending on camera's transform
         Vector3 zVelocity = forwardMovement * _forwardMovementSpeed * _mainCamera.transform.forward;
