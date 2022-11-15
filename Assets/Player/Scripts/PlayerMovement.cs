@@ -57,11 +57,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_playerAttack.IsAiming)
         {
-            _mainCamera.transform.localRotation = Quaternion.Euler(-_yRotationInput, -15f, 0);
+            _mainCamera.transform.localRotation = Quaternion.Euler(-_yRotationInput, 0, 0);
         }
         else
         {
-            _mainCamera.transform.localRotation = Quaternion.Slerp(_mainCamera.transform.localRotation, Quaternion.Euler(0, -15f, 0), 0.05f);
+            _mainCamera.transform.localRotation = Quaternion.Slerp(_mainCamera.transform.localRotation, Quaternion.Euler(0, 0, 0), 0.05f);
             _yRotationInput = 0;
         }
         transform.rotation = Quaternion.Euler(0, _xRotationInput, 0);
@@ -73,8 +73,8 @@ public class PlayerMovement : MonoBehaviour
         float forwardMovement = Input.GetAxis("Vertical");
         float horizontalMovement = Input.GetAxis("Horizontal");
 
-        bool isWalking = forwardMovement != 0 ? true : false;
-        _animator.SetBool("_isWalking", isWalking);
+        _animator.SetFloat("_zVelocity", forwardMovement);
+        _animator.SetFloat("_xVelocity", horizontalMovement);
 
         //calculating velocities depending on camera's transform
         Vector3 zVelocity = forwardMovement * _forwardMovementSpeed * _mainCamera.transform.forward;
