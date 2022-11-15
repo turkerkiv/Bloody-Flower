@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] Transform _cameraRoot;
     [SerializeField] float _forwardMovementSpeed = 5f;
     [SerializeField] float _sideMovementSpeed = 5f;
 
-    [SerializeField] float _mouseSensivity = 60f;
+    [SerializeField] float _mouseSensivity = 10f;
     [SerializeField] float _maxHorizontalLookAngle = 65f;
     [SerializeField] float _maxVerticalLookAngle = 65f;
 
@@ -15,9 +16,10 @@ public class PlayerMovement : MonoBehaviour
     Camera _mainCamera;
     Rigidbody _rb;
     Animator _animator;
+    PlayerInputManager _inputManager;
 
-    float _xRotationInput;
     float _yRotationInput;
+    Vector2 _currentVelocity;
 
     void Awake()
     {
@@ -25,16 +27,16 @@ public class PlayerMovement : MonoBehaviour
         _mainCamera = Camera.main;
         _playerAttack = GetComponent<PlayerAttack>();
         _animator = GetComponent<Animator>();
+        _inputManager = GetComponent<PlayerInputManager>();
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        _inputManager.HideCursor();
     }
 
     void Update()
     {
-        Rotate();
     }
 
     private void FixedUpdate()
@@ -42,47 +44,49 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
+    private void LateUpdate()
+    {
+        Rotate();
+    }
+
     void Rotate()
     {
-        float xAxis = Input.GetAxis("Mouse X");
-        float yAxis = Input.GetAxis("Mouse Y");
+        _mainCamera.transform.position = _cameraRoot.position;
+
+        float xAxis = _inputManager.LookValue.x;
+        float yAxis = _inputManager.LookValue.y;
 
         float xValue = xAxis * _mouseSensivity * Time.deltaTime;
         float yValue = yAxis * _mouseSensivity * Time.deltaTime;
 
-        _xRotationInput += xValue;
-
-        _yRotationInput += yValue;
+        _yRotationInput -= yValue;
         _yRotationInput = Mathf.Clamp(_yRotationInput, -_maxVerticalLookAngle, _maxVerticalLookAngle); //to dont let player to rotate wrongly
 
         if (!_playerAttack.IsAiming)
         {
-            _mainCamera.transform.localRotation = Quaternion.Euler(-_yRotationInput, 0, 0);
+            _mainCamera.transform.localRotation = Quaternion.Euler(_yRotationInput, 0, 0);
         }
         else
         {
-            _mainCamera.transform.localRotation = Quaternion.Slerp(_mainCamera.transform.localRotation, Quaternion.Euler(0, 0, 0), 0.05f);
+            _mainCamera.transform.localRotation = Quaternion.Slerp(_mainCamera.transform.localRotation, Quaternion.Euler(0, 0, 0), 0.05f); //NEED DELTATIME
             _yRotationInput = 0;
         }
-        transform.rotation = Quaternion.Euler(0, _xRotationInput, 0);
+
+        transform.Rotate(Vector3.up, xValue);
     }
 
     void Move()
     {
-        //getting input //may need some improvement on horizontal a,d movement
-        float forwardMovement = Input.GetAxis("Vertical");
-        float horizontalMovement = Input.GetAxis("Horizontal");
+        _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, _inputManager.MoveValue.x * _sideMovementSpeed, 9f * Time.fixedDeltaTime);
+        _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, _inputManager.MoveValue.y * _forwardMovementSpeed, 9f * Time.fixedDeltaTime);
 
-        _animator.SetFloat("_zVelocity", forwardMovement);
-        _animator.SetFloat("_xVelocity", horizontalMovement);
+        float xVelDifference = _currentVelocity.x - _rb.velocity.x;
+        float zVelDifference = _currentVelocity.y - _rb.velocity.z;
 
-        //calculating velocities depending on camera's transform
-        Vector3 zVelocity = forwardMovement * _forwardMovementSpeed * _mainCamera.transform.forward;
-        Vector3 horizontalVelocity = horizontalMovement * _sideMovementSpeed * _mainCamera.transform.right;
+        //transform Vector didnt get it
+        _rb.AddForce(transform.TransformVector(new Vector3(xVelDifference, 0, zVelDifference)), ForceMode.VelocityChange);
 
-        //to not fly
-        Vector3 finalVelocity = new Vector3(zVelocity.x + horizontalVelocity.x, _rb.velocity.y, zVelocity.z + horizontalVelocity.z);
-
-        _rb.velocity = finalVelocity;
+        _animator.SetFloat("_xVelocity", _currentVelocity.x);
+        _animator.SetFloat("_zVelocity", _currentVelocity.y);
     }
 }
