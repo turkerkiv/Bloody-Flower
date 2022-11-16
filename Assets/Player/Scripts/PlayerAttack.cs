@@ -11,7 +11,6 @@ public class PlayerAttack : MonoBehaviour
     PlayerInputManager _inputManager;
 
     int _animAimingBoolHash;
-    int _animFiringTriggerHash;
 
     void Awake()
     {
@@ -20,7 +19,6 @@ public class PlayerAttack : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _animAimingBoolHash = Animator.StringToHash("_isAiming");
-        _animFiringTriggerHash = Animator.StringToHash("_fire");
     }
 
     void Update()
@@ -30,8 +28,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void Fire()
     {
-        //fix animation delaying etc. issues 
-        _animator.SetTrigger(_animFiringTriggerHash);
+        //fixed delaying but not it is kinda unrealistic
+        _animator.Play("Shooting", 0, 0.25f);
 
         if (!Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
         HumanAI human = hit.transform.GetComponentInParent<HumanAI>();
