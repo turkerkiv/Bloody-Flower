@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     Camera _mainCamera;
     Rigidbody _rb;
     Animator _animator;
-    PlayerInputManager _inputManager;
+    Player _player;
 
     float _yRotationInput;
     Vector2 _currentVelocity;
@@ -24,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _animator = GetComponent<Animator>();
-        _inputManager = GetComponent<PlayerInputManager>();
+        _player = GetComponent<Player>();
     }
 
     private void Start()
     {
-        _inputManager.HideCursor();
+        _player.PlayerInputManager.HideCursor();
     }
 
     void Update()
@@ -50,8 +50,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _mainCamera.transform.position = _cameraRoot.position;
 
-        float xAxis = _inputManager.LookValue.x;
-        float yAxis = _inputManager.LookValue.y;
+        float xAxis = _player.PlayerInputManager.LookValue.x;
+        float yAxis = _player.PlayerInputManager.LookValue.y;
 
         float xValue = xAxis * _mouseSensivity * Time.deltaTime;
         float yValue = yAxis * _mouseSensivity * Time.deltaTime;
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         _yRotationInput -= yValue;
         _yRotationInput = Mathf.Clamp(_yRotationInput, -_maxVerticalLookAngle, _maxVerticalLookAngle); //to dont let player to rotate wrongly
 
-        if (!_inputManager.IsAiming)
+        if (!_player.PlayerInputManager.IsAiming)
         {
             _mainCamera.transform.localRotation = Quaternion.Euler(_yRotationInput, 0, 0);
         }
@@ -74,8 +74,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, _inputManager.MoveValue.x * _sideMovementSpeed, 9f * Time.fixedDeltaTime);
-        _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, _inputManager.MoveValue.y * _forwardMovementSpeed, 9f * Time.fixedDeltaTime);
+        _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, _player.PlayerInputManager.MoveValue.x * _sideMovementSpeed, 9f * Time.fixedDeltaTime);
+        _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, _player.PlayerInputManager.MoveValue.y * _forwardMovementSpeed, 9f * Time.fixedDeltaTime);
 
         float xVelDifference = _currentVelocity.x - _rb.velocity.x;
         float zVelDifference = _currentVelocity.y - _rb.velocity.z;

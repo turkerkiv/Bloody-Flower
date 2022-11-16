@@ -6,13 +6,14 @@ public class PlayerGlassManager : MonoBehaviour
 {
     [SerializeField] float _glassOnDuration = 5f;
 
+    Player _player;
+
     GlassState _currentGlassState;
-    PlayerInputManager _inputManager;
     public GlassState CurrentGlassState { get { return _currentGlassState; } }
 
     private void Awake()
     {
-        _inputManager = GetComponent<PlayerInputManager>();
+        _player = GetComponent<Player>();
 
         _currentGlassState = GlassState.GlassOn;
     }
@@ -39,8 +40,8 @@ public class PlayerGlassManager : MonoBehaviour
         _currentGlassState = GlassState.GlassOn;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
         Debug.Log(_currentGlassState);
-        
-        _inputManager.DisableAiming();
+
+        _player.PlayerInputManager.DisableAiming();
     }
 
     void TakeOffGlass()

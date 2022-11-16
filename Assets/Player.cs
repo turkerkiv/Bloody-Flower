@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public PlayerAttack PlayerAttack { get; private set; }
+    public PlayerGlassManager PlayerGlassManager { get; private set; }
+    public PlayerInputManager PlayerInputManager { get; private set; }
+    public PlayerMovement PlayerMovement { get; private set; }
+
+    private void Awake()
+    {
+        PlayerAttack = GetComponent<PlayerAttack>();
+        PlayerGlassManager = GetComponent<PlayerGlassManager>();
+        PlayerInputManager = GetComponent<PlayerInputManager>();
+        PlayerMovement = GetComponent<PlayerMovement>();
+    }
+}

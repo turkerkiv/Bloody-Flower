@@ -8,14 +8,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] Transform _tipOfWeapon;
 
     Animator _animator;
-    PlayerInputManager _inputManager;
+    Player _player;
 
     int _animAimingBoolHash;
 
     void Awake()
     {
         _crosshair.SetActive(false);
-        _inputManager = GetComponent<PlayerInputManager>();
+        _player = GetComponent<Player>();
 
         _animator = GetComponent<Animator>();
         _animAimingBoolHash = Animator.StringToHash("_isAiming");
@@ -41,9 +41,9 @@ public class PlayerAttack : MonoBehaviour
 
     void Aim()
     {
-        if (_crosshair.activeInHierarchy == _inputManager.IsAiming) { return; }
+        if (_crosshair.activeInHierarchy == _player.PlayerInputManager.IsAiming) { return; }
 
-        _crosshair.SetActive(_inputManager.IsAiming);
-        _animator.SetBool(_animAimingBoolHash, _inputManager.IsAiming);
+        _crosshair.SetActive(_player.PlayerInputManager.IsAiming);
+        _animator.SetBool(_animAimingBoolHash, _player.PlayerInputManager.IsAiming);
     }
 }

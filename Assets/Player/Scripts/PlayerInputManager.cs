@@ -6,8 +6,8 @@ using UnityEngine.InputSystem.Interactions;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    PlayerGlassManager _playerGlassManager;
-    PlayerAttack _playerAttack;
+    Player _player;
+    
     PlayerInput _playerInput;
 
     InputActionMap _currentActionMap;
@@ -23,8 +23,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerGlassManager = GetComponent<PlayerGlassManager>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _player = GetComponent<Player>();
         _playerInput = GetComponent<PlayerInput>();
 
         _currentActionMap = _playerInput.currentActionMap;
@@ -79,18 +78,18 @@ public class PlayerInputManager : MonoBehaviour
     void OnFire(InputAction.CallbackContext context)
     {
         if (!IsAiming) { return; }
-        _playerAttack.Fire(); // maybe change here to add ifisnotaimingreturn code here
+        _player.PlayerAttack.Fire(); // maybe change here to add ifisnotaimingreturn code here
     }
 
     void OnAim(InputAction.CallbackContext context)
     {
-        if (_playerGlassManager.CurrentGlassState == PlayerGlassManager.GlassState.GlassOn) { return; }
+        if (_player.PlayerGlassManager.CurrentGlassState == PlayerGlassManager.GlassState.GlassOn) { return; }
 
         IsAiming = context.ReadValueAsButton();
     }
 
     void OnChangeGlassState(InputAction.CallbackContext context)
     {
-        _playerGlassManager.ChangeGlassState();
+        _player.PlayerGlassManager.ChangeGlassState();
     }
 }
