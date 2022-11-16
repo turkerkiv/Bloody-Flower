@@ -40,11 +40,11 @@ public class HumanPool : MonoBehaviour
 
     }
 
-    public void ChangeBodies(Player.GlassState state)
+    public void ChangeBodies(PlayerGlassManager.GlassState state)
     {
         foreach (HumanAI human in _humans)
         {
-            if (state == Player.GlassState.GlassOn)
+            if (state == PlayerGlassManager.GlassState.GlassOn)
             {
                 human.ChangeBody(state);
             }

@@ -2,50 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerGlassManager : MonoBehaviour
 {
     [SerializeField] float _glassOnDuration = 5f;
 
-    GlassState _glassState;
+    GlassState _currentGlassState;
+    PlayerInputManager _inputManager;
+    public GlassState CurrentGlassState { get { return _currentGlassState; } }
 
-    void Start()
+    private void Awake()
     {
+        _inputManager = GetComponent<PlayerInputManager>();
 
+        _currentGlassState = GlassState.GlassOn;
     }
 
     void Update()
     {
-       // SetGlassState();
     }
 
-    void SetGlassState()
+    public void ChangeGlassState()
     {
-//        if (!Input.GetKeyDown(KeyCode.F)) { return; }
-
         CancelInvoke(nameof(WearGlass));
 
-        if (_glassState == GlassState.GlassOn)
+        if (_currentGlassState == GlassState.GlassOn)
         {
             TakeOffGlass();
             Invoke(nameof(WearGlass), _glassOnDuration);
             return;
         }
-
         WearGlass();
-        Debug.Log(Time.time);
     }
 
     void WearGlass()
     {
-        _glassState = GlassState.GlassOn;
+        _currentGlassState = GlassState.GlassOn;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
+        Debug.Log(_currentGlassState);
+        
+        _inputManager.DisableAiming();
     }
 
     void TakeOffGlass()
     {
-        _glassState = GlassState.GlassOff;
+        _currentGlassState = GlassState.GlassOff;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
-        Debug.Log(Time.time);
+        Debug.Log(_currentGlassState);
     }
 
     public enum GlassState

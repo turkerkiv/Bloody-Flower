@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Interactions;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    PlayerGlassManager _playerGlassManager;
     PlayerAttack _playerAttack;
     PlayerInput _playerInput;
 
@@ -14,6 +15,7 @@ public class PlayerInputManager : MonoBehaviour
     InputAction _lookAction;
     InputAction _fireAction;
     InputAction _aimAction;
+    InputAction _glassStateAction;
 
     public Vector2 MoveValue { get; private set; }
     public Vector2 LookValue { get; private set; }
@@ -21,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
+        _playerGlassManager = GetComponent<PlayerGlassManager>();
         _playerAttack = GetComponent<PlayerAttack>();
         _playerInput = GetComponent<PlayerInput>();
 
@@ -30,20 +33,27 @@ public class PlayerInputManager : MonoBehaviour
         _lookAction = _currentActionMap.FindAction("Look");
         _aimAction = _currentActionMap.FindAction("Aim");
         _fireAction = _currentActionMap.FindAction("Fire");
+        _glassStateAction = _currentActionMap.FindAction("ChangeGlassState");
 
         _moveAction.performed += OnMove;
         _lookAction.performed += OnLook;
-        _aimAction.started += OnMouse1Pressed;
-        _fireAction.started += OnMouse0Pressed;
+        _aimAction.started += OnAim;
+        _fireAction.started += OnFire;
+        _glassStateAction.started += OnChangeGlassState;
 
         _moveAction.canceled += OnMove;
         _lookAction.canceled += OnLook;
-        _aimAction.canceled += OnMouse1Pressed;
+        _aimAction.canceled += OnAim;
     }
 
     public void HideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void DisableAiming()
+    {
+        IsAiming = false;
     }
 
     private void OnEnable()
@@ -66,13 +76,21 @@ public class PlayerInputManager : MonoBehaviour
         LookValue = context.ReadValue<Vector2>();
     }
 
-    void OnMouse0Pressed(InputAction.CallbackContext context)
+    void OnFire(InputAction.CallbackContext context)
     {
-        _playerAttack.Fire();
+        if (!IsAiming) { return; }
+        _playerAttack.Fire(); // maybe change here to add ifisnotaimingreturn code here
     }
 
-    void OnMouse1Pressed(InputAction.CallbackContext context)
+    void OnAim(InputAction.CallbackContext context)
     {
+        if (_playerGlassManager.CurrentGlassState == PlayerGlassManager.GlassState.GlassOn) { return; }
+
         IsAiming = context.ReadValueAsButton();
+    }
+
+    void OnChangeGlassState(InputAction.CallbackContext context)
+    {
+        _playerGlassManager.ChangeGlassState();
     }
 }

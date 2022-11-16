@@ -28,24 +28,9 @@ public class PlayerAttack : MonoBehaviour
         Aim();
     }
 
-    void Aim()
-    {
-        if (_inputManager.IsAiming)
-        {
-            _crosshair.SetActive(true);
-        }
-        else
-        {
-            _crosshair.SetActive(false);
-        }
-
-        if (_animator.GetBool(_animAimingBoolHash) == _inputManager.IsAiming) { return; }
-        _animator.SetBool(_animAimingBoolHash, _inputManager.IsAiming);
-    }
-
     public void Fire()
     {
-        if (!_inputManager.IsAiming) { return; }
+        //fix animation delaying etc. issues 
         _animator.SetTrigger(_animFiringTriggerHash);
 
         if (!Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
@@ -54,5 +39,13 @@ public class PlayerAttack : MonoBehaviour
         {
             human.gameObject.SetActive(false);
         }
+    }
+
+    void Aim()
+    {
+        if (_crosshair.activeInHierarchy == _inputManager.IsAiming) { return; }
+
+        _crosshair.SetActive(_inputManager.IsAiming);
+        _animator.SetBool(_animAimingBoolHash, _inputManager.IsAiming);
     }
 }

@@ -58,9 +58,9 @@ public class HumanAI : MonoBehaviour
         Instantiate(body, transform.position, Quaternion.identity, _glassOffBody.transform);
     }
 
-    public void ChangeBody(Player.GlassState state)
+    public void ChangeBody(PlayerGlassManager.GlassState state)
     {
-        if (state == Player.GlassState.GlassOn)
+        if (state == PlayerGlassManager.GlassState.GlassOn)
         {
             _glassOnBody.SetActive(true);
             _glassOffBody.SetActive(false);
