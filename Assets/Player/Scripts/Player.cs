@@ -15,12 +15,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        SetGlassState();
+       // SetGlassState();
     }
 
     void SetGlassState()
     {
-        if (!Input.GetKeyDown(KeyCode.F)) { return; }
+//        if (!Input.GetKeyDown(KeyCode.F)) { return; }
 
         CancelInvoke(nameof(WearGlass));
 

@@ -9,10 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _sideMovementSpeed = 5f;
 
     [SerializeField] float _mouseSensivity = 10f;
-    [SerializeField] float _maxHorizontalLookAngle = 65f;
     [SerializeField] float _maxVerticalLookAngle = 65f;
 
-    PlayerAttack _playerAttack;
     Camera _mainCamera;
     Rigidbody _rb;
     Animator _animator;
@@ -25,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
-        _playerAttack = GetComponent<PlayerAttack>();
         _animator = GetComponent<Animator>();
         _inputManager = GetComponent<PlayerInputManager>();
     }
@@ -62,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         _yRotationInput -= yValue;
         _yRotationInput = Mathf.Clamp(_yRotationInput, -_maxVerticalLookAngle, _maxVerticalLookAngle); //to dont let player to rotate wrongly
 
-        if (!_playerAttack.IsAiming)
+        if (!_inputManager.IsAiming)
         {
             _mainCamera.transform.localRotation = Quaternion.Euler(_yRotationInput, 0, 0);
         }

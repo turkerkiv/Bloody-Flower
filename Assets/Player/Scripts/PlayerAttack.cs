@@ -8,46 +8,48 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] Transform _tipOfWeapon;
 
     Animator _animator;
+    PlayerInputManager _inputManager;
 
-    bool _isAiming;
-
-    public bool IsAiming { get { return _isAiming; } }
+    int _animAimingBoolHash;
+    int _animFiringTriggerHash;
 
     void Awake()
     {
         _crosshair.SetActive(false);
+        _inputManager = GetComponent<PlayerInputManager>();
+
         _animator = GetComponent<Animator>();
+        _animAimingBoolHash = Animator.StringToHash("_isAiming");
+        _animFiringTriggerHash = Animator.StringToHash("_fire");
     }
 
     void Update()
     {
         Aim();
-
-        Fire();
     }
 
     void Aim()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (_inputManager.IsAiming)
         {
-            _isAiming = true;
             _crosshair.SetActive(true);
-            _animator.SetBool(nameof(_isAiming), _isAiming);
         }
-        if (Input.GetMouseButtonUp(1))
+        else
         {
-            _isAiming = false;
             _crosshair.SetActive(false);
-            _animator.SetBool(nameof(_isAiming), _isAiming);
         }
+
+        if (_animator.GetBool(_animAimingBoolHash) == _inputManager.IsAiming) { return; }
+        _animator.SetBool(_animAimingBoolHash, _inputManager.IsAiming);
     }
 
-    void Fire()
+    public void Fire()
     {
-        if (!_isAiming || !Input.GetMouseButtonDown(0) || !Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
+        if (!_inputManager.IsAiming) { return; }
+        _animator.SetTrigger(_animFiringTriggerHash);
 
+        if (!Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
         HumanAI human = hit.transform.GetComponentInParent<HumanAI>();
-
         if (human != null)
         {
             human.gameObject.SetActive(false);
