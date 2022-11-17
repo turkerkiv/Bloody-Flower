@@ -41,6 +41,8 @@ public class PlayerGlassManager : MonoBehaviour
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
         Debug.Log(_currentGlassState);
 
+        _player.Animator.SetTrigger("_changeGlasses");
+
         _player.PlayerInputManager.DisableAiming();
     }
 
@@ -49,6 +51,8 @@ public class PlayerGlassManager : MonoBehaviour
         _currentGlassState = GlassState.GlassOff;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
         Debug.Log(_currentGlassState);
+        
+        _player.Animator.SetTrigger("_changeGlasses");
     }
 
     public enum GlassState

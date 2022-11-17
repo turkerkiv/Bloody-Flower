@@ -9,11 +9,15 @@ public class Player : MonoBehaviour
     public PlayerInputManager PlayerInputManager { get; private set; }
     public PlayerMovement PlayerMovement { get; private set; }
 
+    public Animator Animator { get; private set; }
+
     private void Awake()
     {
         PlayerAttack = GetComponent<PlayerAttack>();
         PlayerGlassManager = GetComponent<PlayerGlassManager>();
         PlayerInputManager = GetComponent<PlayerInputManager>();
         PlayerMovement = GetComponent<PlayerMovement>();
+
+        Animator = GetComponent<Animator>();
     }
 }
