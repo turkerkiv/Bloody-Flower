@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerGlassManager : MonoBehaviour
 {
+    [SerializeField] GameObject _glasses;
+    [SerializeField] Canvas _glassesStateCanvas;
     [SerializeField] float _glassOnDuration = 5f;
 
     Player _player;
@@ -14,8 +16,11 @@ public class PlayerGlassManager : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
+    }
 
-        _currentGlassState = GlassState.GlassOn;
+    private void Start()
+    {
+        WearGlass();
     }
 
     void Update()
@@ -39,20 +44,34 @@ public class PlayerGlassManager : MonoBehaviour
     {
         _currentGlassState = GlassState.GlassOn;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
-        Debug.Log(_currentGlassState);
-
-        _player.Animator.SetTrigger("_changeGlasses");
 
         _player.PlayerInputManager.DisableAiming();
+
+        //will change here
+        _player.Animator.SetTrigger("_changeGlasses");
+        _glasses.SetActive(true);
+        Invoke(nameof(EnableGlassesCanvas), 1f);
     }
 
     void TakeOffGlass()
     {
         _currentGlassState = GlassState.GlassOff;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
-        Debug.Log(_currentGlassState);
-        
+
+        //will change here
         _player.Animator.SetTrigger("_changeGlasses");
+        _glassesStateCanvas.enabled = false;
+        Invoke(nameof(DisableGlassesObject), 1f);
+    }
+
+    void EnableGlassesCanvas()
+    {
+        _glassesStateCanvas.enabled = true;
+    }
+
+    void DisableGlassesObject()
+    {
+        _glasses.SetActive(false);
     }
 
     public enum GlassState
