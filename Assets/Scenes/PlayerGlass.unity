@@ -662,6 +662,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &960446641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 960446641, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 1835103260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &960446643
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960446641}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e86f191af003ac84ba632ca1b4b2cf92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1835103260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -669,20 +695,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 275400185737156244, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 275400185737156244, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
-        type: 3}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1219
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 275400185737156244, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
-        type: 3}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0602
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960446642, guid: 55431a3a9b09f1d4fb9161ebbfa894ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1046714912078507067, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
         type: 3}
@@ -744,6 +783,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRig
       objectReference: {fileID: 0}
+    - target: {fileID: 4964256749721786364, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
+        type: 3}
+      propertyPath: _glassesAnimator
+      value: 
+      objectReference: {fileID: 960446643}
     - target: {fileID: 4964256749721786364, guid: 55431a3a9b09f1d4fb9161ebbfa894ce,
         type: 3}
       propertyPath: _glassesStateCanvas
