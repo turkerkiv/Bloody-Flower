@@ -7,7 +7,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] GameObject _crosshair;
     [SerializeField] Transform _tipOfWeapon;
 
-    Animator _animator;
     Player _player;
 
     int _animAimingBoolHash;
@@ -17,7 +16,6 @@ public class PlayerAttack : MonoBehaviour
         _crosshair.SetActive(false);
         _player = GetComponent<Player>();
 
-        _animator = GetComponent<Animator>();
         _animAimingBoolHash = Animator.StringToHash("_isAiming");
     }
 
@@ -29,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
     public void Fire()
     {
         //fixed delaying but not it is kinda unrealistic
-        _animator.Play("Shooting", 0, 0.25f);
+        _player.Animator.Play("Shooting", 0, 0.25f);
 
         if (!Physics.Raycast(_tipOfWeapon.position, _tipOfWeapon.forward, out RaycastHit hit)) { return; }
         HumanAI human = hit.transform.GetComponentInParent<HumanAI>();
@@ -44,6 +42,6 @@ public class PlayerAttack : MonoBehaviour
         if (_crosshair.activeInHierarchy == _player.PlayerInputManager.IsAiming) { return; }
 
         _crosshair.SetActive(_player.PlayerInputManager.IsAiming);
-        _animator.SetBool(_animAimingBoolHash, _player.PlayerInputManager.IsAiming);
+        _player.Animator.SetBool(_animAimingBoolHash, _player.PlayerInputManager.IsAiming);
     }
 }

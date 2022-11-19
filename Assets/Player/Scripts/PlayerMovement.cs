@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     Camera _mainCamera;
     Rigidbody _rb;
-    Animator _animator;
     Player _player;
 
     float _yRotationInput;
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
-        _animator = GetComponent<Animator>();
         _player = GetComponent<Player>();
     }
 
@@ -83,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         //transform Vector didnt get it
         _rb.AddForce(transform.TransformVector(new Vector3(xVelDifference, 0, zVelDifference)), ForceMode.VelocityChange);
 
-        _animator.SetFloat("_xVelocity", _currentVelocity.x);
-        _animator.SetFloat("_zVelocity", _currentVelocity.y);
+        _player.Animator.SetFloat("_xVelocity", _currentVelocity.x);
+        _player.Animator.SetFloat("_zVelocity", _currentVelocity.y);
     }
 }
