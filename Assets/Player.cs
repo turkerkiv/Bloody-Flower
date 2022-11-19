@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         PlayerAttack = GetComponent<PlayerAttack>();
-        PlayerGlassManager = GetComponent<PlayerGlassManager>();
+        PlayerGlassManager = GetComponentInChildren<PlayerGlassManager>();
         PlayerInputManager = GetComponent<PlayerInputManager>();
         PlayerMovement = GetComponent<PlayerMovement>();
 

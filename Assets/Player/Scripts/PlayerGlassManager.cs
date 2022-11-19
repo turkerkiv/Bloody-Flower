@@ -4,59 +4,58 @@ using UnityEngine;
 
 public class PlayerGlassManager : MonoBehaviour
 {
-    [SerializeField] Animator _glassesAnimator;
-    [SerializeField] Canvas _glassesStateCanvas;
-    [SerializeField] float _glassOnDuration = 5f;
+    [SerializeField] float _glassOffDuration = 5f;
 
+    Animator _glassesAnimator;
+    Canvas _glassesStateCanvas;
     Player _player;
-
     GlassState _currentGlassState;
+
     public GlassState CurrentGlassState { get { return _currentGlassState; } }
 
     private void Awake()
     {
-        _player = GetComponent<Player>();
+        _player = GetComponentInParent<Player>();
+        _glassesAnimator = GetComponent<Animator>();
+        _glassesStateCanvas = GetComponentInChildren<Canvas>();
     }
 
     private void Start()
     {
-        WearGlasses();
-    }
-
-    void Update()
-    {
+        _glassesAnimator.SetBool("_isGlassesWore", true);
     }
 
     public void ChangeGlassState()
     {
-        CancelInvoke(nameof(WearGlasses));
-
         if (_currentGlassState == GlassState.GlassOn)
         {
-            TakeOffGlasses();
-            Invoke(nameof(WearGlasses), _glassOnDuration);
+            _glassesAnimator.SetBool("_isGlassesWore", false);
             return;
         }
 
-        WearGlasses();
+        _glassesAnimator.SetBool("_isGlassesWore", true);
     }
 
     void WearGlasses()
     {
+        CancelInvoke(nameof(ChangeGlassState));
+
         _currentGlassState = GlassState.GlassOn;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOn);
 
         _player.PlayerInputManager.DisableAiming();
 
-        _glassesAnimator.SetBool("_isGlassesWore", true);
+        _glassesStateCanvas.enabled = true;
     }
 
     void TakeOffGlasses()
     {
+        Invoke(nameof(ChangeGlassState), _glassOffDuration);
+
         _currentGlassState = GlassState.GlassOff;
         HumanPool.Instance.ChangeBodies(GlassState.GlassOff);
 
-        _glassesAnimator.SetBool("_isGlassesWore", false);
+        _glassesStateCanvas.enabled = false;
     }
 
     public enum GlassState
