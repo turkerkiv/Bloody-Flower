@@ -953,17 +953,17 @@ PrefabInstance:
     - target: {fileID: 636602301636210645, guid: bf2821a727876cb46ad92aabfa1c9e71,
         type: 3}
       propertyPath: _moverHumanCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 636602301636210645, guid: bf2821a727876cb46ad92aabfa1c9e71,
         type: 3}
       propertyPath: _killerHumanCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 636602301636210645, guid: bf2821a727876cb46ad92aabfa1c9e71,
         type: 3}
       propertyPath: _steadyHumanCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 636602301636210645, guid: bf2821a727876cb46ad92aabfa1c9e71,
         type: 3}

@@ -60,16 +60,8 @@ public class HumanAI : MonoBehaviour
 
     public void ChangeBody(PlayerGlassManager.GlassState state)
     {
-        if (state == PlayerGlassManager.GlassState.GlassOn)
-        {
-            _glassOnBody.SetActive(true);
-            _glassOffBody.SetActive(false);
-        }
-        else
-        {
-            _glassOnBody.SetActive(false);
-            _glassOffBody.SetActive(true);
-        }
+        _glassOffBody.SetActive(state == PlayerGlassManager.GlassState.GlassOff);
+        _glassOnBody.SetActive(state == PlayerGlassManager.GlassState.GlassOn);
     }
 
     void SelectRandomHuman()
