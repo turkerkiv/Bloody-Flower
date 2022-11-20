@@ -11,6 +11,7 @@ public class HumanAI : MonoBehaviour
 
     NavMeshAgent _navMeshAgent;
     HumanAI _targetHuman;
+    Animator[] _animators;
 
     public HumanPool.HumanType Type { get; set; }
 
@@ -20,6 +21,7 @@ public class HumanAI : MonoBehaviour
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animators = GetComponentsInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -80,6 +82,7 @@ public class HumanAI : MonoBehaviour
         if (_isDead) { return; }
 
         _navMeshAgent.SetDestination(_targetHuman.transform.position);
+        SetAnimatorSpeedValue(1);
     }
 
     void CheckForAction()
@@ -87,9 +90,6 @@ public class HumanAI : MonoBehaviour
         //if close enough
         if (!_tookAction && Vector3.Distance(transform.position, _targetHuman.transform.position) <= _navMeshAgent.stoppingDistance)
         {
-            //to make it once
-            _tookAction = true;
-
             //if it is killer, roll dice to kill or not 
             if (Type == HumanPool.HumanType.Killer && CanStartAction())
             {
@@ -103,6 +103,11 @@ public class HumanAI : MonoBehaviour
                 Debug.Log("Tried");
                 Invoke(nameof(SelectRandomHuman), 5f);
             }
+
+            //to make it once
+            _tookAction = true;
+
+            SetAnimatorSpeedValue(0);
         }
     }
 
@@ -134,5 +139,13 @@ public class HumanAI : MonoBehaviour
     void LookToTarget()
     {
         transform.LookAt(_targetHuman.transform);
+    }
+
+    void SetAnimatorSpeedValue(float value)
+    {
+        foreach (Animator animator in _animators)
+        {
+            animator.SetFloat("_speed", value);
+        }
     }
 }
