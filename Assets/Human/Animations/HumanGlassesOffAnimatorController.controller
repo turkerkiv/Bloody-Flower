@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 5966d8287268d874e9a627d0aaf13683,
+  m_Motion: {fileID: -203655887218126122, guid: 54ba0c87d973bcf4a95a479169caac90,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -84,7 +84,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanGlassOnAnimatorController
+  m_Name: HumanGlassesOffAnimatorController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: _speed
@@ -92,7 +92,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -152,7 +152,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: e4f3d1c9142a05d4ca62f20e8f03e187,
+  m_Motion: {fileID: -203655887218126122, guid: 473cc467cddc7824a9ee345dda62a2c7,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

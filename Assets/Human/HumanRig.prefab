@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7026979734393446789}
   m_Layer: 0
-  m_Name: GlassOffBody
+  m_Name: GlassOffBodyParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7026979734393446789
 Transform:
   m_ObjectHideFlags: 0
@@ -79,9 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6e426fc1e012b41927c837574cd4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _glassOnBody: {fileID: 7026979735745134874}
-  _glassOffBody: {fileID: 7026979734393446790}
-  _actionPercent: 10
+  _glassOffBodyParent: {fileID: 7026979734393446789}
+  _glassOnBodyGraphics: {fileID: 8223992001045994667}
+  _glassOffBodyGraphics: {fileID: 0}
+  _actionProbability: 1
 --- !u!195 &289955557919015484
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -126,9 +127,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7026979735745134873}
-  - component: {fileID: 2323307393110921711}
   m_Layer: 0
-  m_Name: GlassOnBody
+  m_Name: GlassOnBodyParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,26 +150,6 @@ Transform:
   m_Father: {fileID: 7026979734880677132}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2323307393110921711
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026979735745134874}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2d226e59912d0014fbf2646ed5c4b916, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5ae1d955568ecb84f8634e15fc94050d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4544820038148582323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -237,26 +217,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: character2
       objectReference: {fileID: 0}
-    - target: {fileID: 5545869685508143829, guid: e7707aec2cc25b449a610f5087a64251,
+    - target: {fileID: 7903812346407054135, guid: e7707aec2cc25b449a610f5087a64251,
         type: 3}
-      propertyPath: m_IsActive
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8203251469489877805, guid: e7707aec2cc25b449a610f5087a64251,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9032322701988059976, guid: e7707aec2cc25b449a610f5087a64251,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4690778749443273603, guid: e7707aec2cc25b449a610f5087a64251, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e7707aec2cc25b449a610f5087a64251, type: 3}
 --- !u!4 &2948348131698655818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1727362179138169337, guid: e7707aec2cc25b449a610f5087a64251,
+    type: 3}
+  m_PrefabInstance: {fileID: 4544820038148582323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8223992001045994667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5562803819356387096, guid: e7707aec2cc25b449a610f5087a64251,
     type: 3}
   m_PrefabInstance: {fileID: 4544820038148582323}
   m_PrefabAsset: {fileID: 0}

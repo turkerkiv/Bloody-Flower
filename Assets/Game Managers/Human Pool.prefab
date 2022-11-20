@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2054824f69ac3414aa860b957de53de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _humanBodies:
+  - {fileID: 8323616242157963414, guid: 1f05b36eff9f0c941a187ddef4a43a0a, type: 3}
+  - {fileID: 690010721706722296, guid: 4f2e058a94bca0742939d136d2b88baf, type: 3}
   _humanPrefab: {fileID: 7026979734880677131, guid: e08597c73bf78a946af4ae329096c8d4,
     type: 3}
-  _steadyHumanCount: 15
-  _moverHumanCount: 5
-  _killerHumanCount: 5
+  _steadyHumanCount: 2
+  _moverHumanCount: 2
+  _killerHumanCount: 1
   _spawnArea: {x: 28, y: 0, z: 28}

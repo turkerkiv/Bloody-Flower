@@ -5,9 +5,10 @@ using UnityEngine.AI;
 
 public class HumanAI : MonoBehaviour
 {
-    [SerializeField] GameObject _glassOnBody;
-    [SerializeField] GameObject _glassOffBody;
-    [SerializeField][Range(0, 100)] int _actionPercent = 10;
+    [SerializeField] Transform _glassOffBodyParent;
+    [SerializeField] GameObject _glassOnBodyGraphics;
+    [SerializeField] GameObject _glassOffBodyGraphics;
+    [SerializeField][Range(0, 10)] int _actionProbability = 1;
 
     NavMeshAgent _navMeshAgent;
     HumanAI _targetHuman;
@@ -21,7 +22,6 @@ public class HumanAI : MonoBehaviour
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _animators = GetComponentsInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -55,15 +55,21 @@ public class HumanAI : MonoBehaviour
         GameManager.Instance.ModifyTrustRate(Type);
     }
 
-    public void SetGlassOffBody(GameObject body)
+    public void InstantiateGlassOffBody(GameObject body)
     {
-        Instantiate(body, transform.position, Quaternion.identity, _glassOffBody.transform);
+        GameObject instance = Instantiate(body, transform.position, Quaternion.identity, _glassOffBodyParent);
+        _glassOffBodyGraphics = instance.transform.Find("BodyGraphics").gameObject;
+        _glassOffBodyGraphics.SetActive(false);
+
+        _animators = GetComponentsInChildren<Animator>();
     }
 
     public void ChangeBody(PlayerGlassManager.GlassState state)
     {
-        _glassOffBody.SetActive(state == PlayerGlassManager.GlassState.GlassOff);
-        _glassOnBody.SetActive(state == PlayerGlassManager.GlassState.GlassOn);
+        bool isGlassWore = state == PlayerGlassManager.GlassState.GlassOn;
+
+        _glassOffBodyGraphics.SetActive(!isGlassWore);
+        _glassOnBodyGraphics.SetActive(isGlassWore);
     }
 
     void SelectRandomHuman()
@@ -115,25 +121,18 @@ public class HumanAI : MonoBehaviour
     {
         List<int> states = new List<int>();
 
-        for (int i = 0; i < _actionPercent; i++)
+        for (int i = 0; i < _actionProbability; i++)
         {
             states.Add(1);
         }
-        for (int i = 0; i < 100 - _actionPercent; i++)
+        for (int i = 0; i < 10 - _actionProbability; i++)
         {
             states.Add(0);
         }
 
         int randomIndex = Random.Range(0, states.Count);
 
-        if (states[randomIndex] == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return states[randomIndex] == 1;
     }
 
     void LookToTarget()
@@ -147,5 +146,7 @@ public class HumanAI : MonoBehaviour
         {
             animator.SetFloat("_speed", value);
         }
+
+        Debug.Log(_animators.Length);
     }
 }

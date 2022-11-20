@@ -80,7 +80,7 @@ public class HumanPool : MonoBehaviour
         _humans.Add(instance);
 
         int randomIndex = Random.Range(0, _humanBodies.Count);
-        instance.SetGlassOffBody(_humanBodies[randomIndex]);
+        instance.InstantiateGlassOffBody(_humanBodies[randomIndex]);
 
         if (type == HumanType.Steady)
         {

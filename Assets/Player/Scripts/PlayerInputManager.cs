@@ -47,7 +47,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void HideCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DisableAiming()
